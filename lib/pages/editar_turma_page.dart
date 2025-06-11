@@ -172,7 +172,7 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
             color: Colors.black.withOpacity(0.05),
             spreadRadius: 0,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, -2),
           ),
         ],
       ),
@@ -183,7 +183,7 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
             children: [
               Icon(
                 Icons.school,
-                color: Theme.of(context).colorScheme.primary,
+                color: Colors.black,
                 size: 24,
               ),
               const SizedBox(width: 12),
@@ -191,7 +191,7 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
                 'Nome da Turma',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -232,7 +232,7 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
             color: Colors.black.withOpacity(0.05),
             spreadRadius: 0,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, -2),
           ),
         ],
       ),
@@ -243,7 +243,7 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
             children: [
               Icon(
                 Icons.person_add,
-                color: Theme.of(context).colorScheme.secondary,
+                color: Colors.black,
                 size: 24,
               ),
               const SizedBox(width: 12),
@@ -251,7 +251,7 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
                 'Adicionar Aluno',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -311,11 +311,11 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
-          BoxShadow(
+        BoxShadow(
             color: Colors.black.withOpacity(0.05),
             spreadRadius: 0,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, -2),
           ),
         ],
       ),
@@ -326,7 +326,7 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
             children: [
               Icon(
                 Icons.group,
-                color: Theme.of(context).colorScheme.tertiary,
+                color: Colors.black,
                 size: 24,
               ),
               const SizedBox(width: 12),
@@ -334,7 +334,7 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
                 'Alunos (${_alunos.length})',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.w600,
-                  color: Theme.of(context).colorScheme.onSurface,
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -383,12 +383,9 @@ class _EditarTurmaPageState extends State<EditarTurmaPage> {
                       CircleAvatar(
                         radius: 18,
                         backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                        child: Text(
-                          aluno.nome.substring(0, 1).toUpperCase(),
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.primary,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.white,
                         ),
                       ),
                       const SizedBox(width: 12),

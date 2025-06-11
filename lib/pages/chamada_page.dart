@@ -148,14 +148,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).colorScheme.primary,
-            Theme.of(context).colorScheme.primary.withOpacity(0.8),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
@@ -172,7 +165,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
             children: [
               Icon(
                 Icons.school,
-                color: Colors.white,
+                color: Colors.black,
                 size: 24,
               ),
               const SizedBox(width: 12),
@@ -180,7 +173,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
                 child: Text(
                   widget.turma.nome,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.white,
+                    color: Colors.black,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -192,14 +185,14 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
             children: [
               Icon(
                 Icons.access_time,
-                color: Colors.white.withOpacity(0.9),
+                color: Colors.black.withOpacity(0.9),
                 size: 18,
               ),
               const SizedBox(width: 8),
               Text(
                 DateFormat('dd/MM/yyyy - HH:mm').format(DateTime.now()),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.white.withOpacity(0.9),
+                  color: Colors.black.withOpacity(0.9),
                 ),
               ),
             ],
@@ -223,7 +216,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
                   child: _buildCounterCard(
                     'Presentes',
                     _totalPresentes.toString(),
-                    Theme.of(context).colorScheme.secondary,
+                    Colors.green,
                     Icons.check_circle,
                   ),
                 ),
@@ -232,7 +225,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
                   child: _buildCounterCard(
                     'Ausentes',
                     _totalAusentes.toString(),
-                    Theme.of(context).colorScheme.error,
+                    Colors.red,
                     Icons.cancel,
                   ),
                 ),
@@ -255,7 +248,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
             color: Colors.black.withOpacity(0.05),
             spreadRadius: 0,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, -2),
           ),
         ],
       ),
@@ -277,7 +270,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
           Text(
             label,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              color: Colors.black,
             ),
           ),
         ],
@@ -289,14 +282,14 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Color.fromARGB(255, 211, 185, 246),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             spreadRadius: 0,
             blurRadius: 10,
-            offset: const Offset(0, 4),
+            offset: const Offset(0, -2),
           ),
         ],
       ),
@@ -309,7 +302,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
               children: [
                 Icon(
                   Icons.group,
-                  color: Theme.of(context).colorScheme.tertiary,
+                  color: Colors.black,
                   size: 24,
                 ),
                 const SizedBox(width: 12),
@@ -317,7 +310,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
                   'Alunos (${_alunos.length})',
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: Theme.of(context).colorScheme.onSurface,
+                    color: Colors.black,
                   ),
                 ),
               ],
@@ -334,9 +327,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
                   duration: const Duration(milliseconds: 200),
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: aluno.presente 
-                      ? Theme.of(context).colorScheme.secondary.withOpacity(0.1)
-                      : Theme.of(context).colorScheme.surface,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
                       color: aluno.presente
@@ -352,22 +343,17 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
                         backgroundColor: aluno.presente
                           ? Theme.of(context).colorScheme.secondary
                           : Theme.of(context).colorScheme.outline.withOpacity(0.2),
-                        child: Text(
-                          aluno.nome.substring(0, 1).toUpperCase(),
-                          style: TextStyle(
-                            color: aluno.presente
-                              ? Colors.white
-                              : Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.black,
+                        )
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: Text(
                           aluno.nome,
                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                            color: Theme.of(context).colorScheme.onSurface,
+                            color: Colors.black,
                             fontWeight: aluno.presente ? FontWeight.w500 : FontWeight.normal,
                           ),
                         ),
@@ -398,7 +384,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Colors.transparent,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),

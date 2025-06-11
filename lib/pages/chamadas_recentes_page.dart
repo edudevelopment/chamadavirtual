@@ -214,7 +214,7 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
               ),
               child: Icon(
                 Icons.school,
-                color: Theme.of(context).colorScheme.primary,
+                color: Colors.black,
                 size: 24,
               ),
             ),
@@ -227,14 +227,14 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
                     chamada.nomeTurma,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w600,
-                      color: Theme.of(context).colorScheme.onSurface,
+                      color: Colors.black,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     DateFormat('dd/MM/yyyy - HH:mm').format(chamada.dataHora),
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                      color: Colors.black,
                     ),
                   ),
                 ],
@@ -245,7 +245,7 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
               duration: const Duration(milliseconds: 200),
               child: Icon(
                 Icons.keyboard_arrow_down,
-                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                color: Colors.black,
               ),
             ),
           ],
@@ -255,12 +255,12 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
           children: [
             _buildStatusChip(
               '✅ ${chamada.totalPresentes} presentes',
-              Theme.of(context).colorScheme.secondary,
+              Colors.green,
             ),
             const SizedBox(width: 8),
             _buildStatusChip(
               '❌ ${chamada.totalAusentes} ausentes',
-              Theme.of(context).colorScheme.error,
+              Colors.red,
             ),
           ],
         ),
@@ -302,7 +302,7 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
           _buildAlunosSection(
             'Presentes',
             chamada.alunosPresentes,
-            Theme.of(context).colorScheme.secondary,
+            Colors.green,
             Icons.check_circle,
           ),
           const SizedBox(height: 16),
@@ -311,7 +311,7 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
           _buildAlunosSection(
             'Ausentes',
             chamada.alunosAusentes,
-            Theme.of(context).colorScheme.error,
+            Colors.red,
             Icons.cancel,
           ),
         ],
@@ -379,7 +379,7 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
           Text(
             nome,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
+              color: Colors.black,
               fontWeight: FontWeight.w500,
             ),
           ),

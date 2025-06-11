@@ -44,9 +44,34 @@ class TurmasProvider extends ChangeNotifier {
   }
 }
 
-class TurmasPage extends StatelessWidget {
+class TurmasPage extends StatefulWidget {
   const TurmasPage({super.key});
 
+  @override
+  State<TurmasPage> createState() => _TurmasPageState();
+}
+
+class _TurmasPageState extends State<TurmasPage> {
+    List<Turma> _turmas = [];
+    bool _isLoading = true;
+    late AnimationController _animationController;
+    
+    Future<void> _loadTurmas() async {
+    try {
+      final turmas = await StorageService.getTurmas();
+      setState(() {
+        _turmas = turmas;
+        _isLoading = false;
+      });
+      _animationController.forward();
+    } catch (e) {
+      setState(() {
+        _turmas = [];
+        _isLoading = false;
+      });
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -71,6 +96,20 @@ class TurmasPage extends StatelessWidget {
             ),
           ),
           centerTitle: true,
+          actions: [
+          IconButton(
+            icon: Icon(
+              Icons.refresh,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+            onPressed: () {
+              setState(() {
+                _isLoading = true;
+              });
+              _loadTurmas();
+            },
+          ),
+        ],
         ),
         body: Consumer<TurmasProvider>(
           builder: (context, provider, child) {
@@ -170,12 +209,12 @@ class TurmasPage extends StatelessWidget {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                        color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
                         Icons.school,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Colors.black,
                         size: 24,
                       ),
                     ),
@@ -188,14 +227,14 @@ class TurmasPage extends StatelessWidget {
                             turma.nome,
                             style: Theme.of(context).textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.w600,
-                              color: Theme.of(context).colorScheme.onSurface,
+                              color: Colors.black,
                             ),
                           ),
                           const SizedBox(height: 4),
                           Text(
                             '${turma.alunos.length} alunos',
                             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                              color: const Color.fromARGB(255, 71, 71, 71),
                             ),
                           ),
                         ],
@@ -204,7 +243,7 @@ class TurmasPage extends StatelessWidget {
                     PopupMenuButton<String>(
                       icon: Icon(
                         Icons.more_vert,
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                        color: Colors.black,
                       ),
                       onSelected: (value) {
                         if (value == 'delete') {
@@ -263,20 +302,20 @@ class TurmasPage extends StatelessWidget {
                           Icons.how_to_reg,
                           size: 18,
                           color: turma.alunos.isEmpty 
-                            ? Theme.of(context).colorScheme.onSurface.withOpacity(0.4)
+                            ? Colors.grey
                             : Theme.of(context).colorScheme.onPrimary,
                         ),
                         label: Text(
                           'Chamada',
                           style: TextStyle(
                             color: turma.alunos.isEmpty 
-                              ? Theme.of(context).colorScheme.onSurface.withOpacity(0.4)
+                              ? Colors.grey
                               : Theme.of(context).colorScheme.onPrimary,
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: turma.alunos.isEmpty 
-                            ? Theme.of(context).colorScheme.onSurface.withOpacity(0.1)
+                            ? const Color.fromARGB(255, 100, 100, 100)
                             : Theme.of(context).colorScheme.primary,
                           elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -321,10 +360,11 @@ class TurmasPage extends StatelessWidget {
     
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Nova Turma'),
         content: TextField(
+          style: TextStyle(color: Colors.white),
           controller: controller,
           decoration: const InputDecoration(
             labelText: 'Nome da turma',
@@ -334,15 +374,15 @@ class TurmasPage extends StatelessWidget {
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () => Navigator.pop(dialogContext),
             child: const Text('Cancelar'),
           ),
           ElevatedButton(
             onPressed: () {
               if (controller.text.trim().isNotEmpty) {
-                Provider.of<TurmasProvider>(context, listen: false)
+                Provider.of<TurmasProvider>(dialogContext, listen: false)
                     .addTurma(controller.text.trim());
-                Navigator.pop(context);
+                Navigator.pop(dialogContext);
               }
             },
             child: const Text('Criar'),
@@ -358,11 +398,11 @@ class TurmasPage extends StatelessWidget {
       builder: (context) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Confirmar exclusão'),
-        content: Text('Deseja realmente excluir a turma "${turma.nome}"?'),
+        content: Text('Deseja realmente excluir a turma "${turma.nome}"?', style: TextStyle(color: Colors.white),),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: const Text('Cancelar', style: TextStyle(color: Colors.white)),
           ),
           ElevatedButton(
             onPressed: () {
@@ -379,4 +419,6 @@ class TurmasPage extends StatelessWidget {
       ),
     );
   }
+  
+
 }
