@@ -1,48 +1,9 @@
-import 'package:chamadavirtual/services/storage_service.dart';
+import 'package:chamadavirtual/providers/turmas_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/turma.dart';
 import 'editar_turma_page.dart';
 import 'chamada_page.dart';
-
-class TurmasProvider extends ChangeNotifier {
-  List<Turma> _turmas = [];
-  bool _isLoading = true;
-
-  List<Turma> get turmas => _turmas;
-  bool get isLoading => _isLoading;
-
-  Future<void> loadTurmas() async {
-    _isLoading = true;
-    notifyListeners();
-    
-    try {
-      _turmas = await StorageService.getTurmas();
-    } catch (e) {
-      _turmas = [];
-    }
-    
-    _isLoading = false;
-    notifyListeners();
-  }
-
-  Future<void> addTurma(String nome) async {
-    final novaTurma = Turma(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      nome: nome,
-      alunos: [],
-      dataCriacao: DateTime.now(),
-    );
-    
-    await StorageService.addTurma(novaTurma);
-    await loadTurmas();
-  }
-
-  Future<void> deleteTurma(String turmaId) async {
-    await StorageService.deleteTurma(turmaId);
-    await loadTurmas();
-  }
-}
 
 class TurmasPage extends StatefulWidget {
   const TurmasPage({super.key});
@@ -52,126 +13,90 @@ class TurmasPage extends StatefulWidget {
 }
 
 class _TurmasPageState extends State<TurmasPage> {
-    List<Turma> _turmas = [];
-    bool _isLoading = true;
-    late AnimationController _animationController;
-    
-    Future<void> _loadTurmas() async {
-    try {
-      final turmas = await StorageService.getTurmas();
-      setState(() {
-        _turmas = turmas;
-        _isLoading = false;
-      });
-      _animationController.forward();
-    } catch (e) {
-      setState(() {
-        _turmas = [];
-        _isLoading = false;
-      });
-    }
-  }
-  
+
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TurmasProvider()..loadTurmas(),
-      child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: Text(
-            'Turmas',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          centerTitle: true,
-          actions: [
-          IconButton(
-            icon: Icon(
-              Icons.refresh,
-              color: Theme.of(context).colorScheme.onSurface,
-            ),
-            onPressed: () {
-              setState(() {
-                _isLoading = true;
-              });
-              _loadTurmas();
-            },
-          ),
-        ],
-        ),
-        body: Consumer<TurmasProvider>(
-          builder: (context, provider, child) {
-            if (provider.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-
-            if (provider.turmas.isEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.school_outlined,
-                      size: 80,
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
-                    ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Nenhuma turma cadastrada',
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Toque no botão + para adicionar sua primeira turma',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              );
-            }
-
-            return ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: provider.turmas.length,
-              itemBuilder: (context, index) {
-                final turma = provider.turmas[index];
-                return _buildTurmaCard(context, turma, provider);
-              },
-            );
-          },
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () => _showAddTurmaDialog(context),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+    return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: IconButton(
           icon: Icon(
-            Icons.add,
-            color: Theme.of(context).colorScheme.onPrimary,
+            Icons.arrow_back_ios,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
-          label: Text(
-            'Nova Turma',
-            style: TextStyle(
-              color: Theme.of(context).colorScheme.onPrimary,
-              fontWeight: FontWeight.w600,
-            ),
+          onPressed: () => Navigator.pop(context),
+        ),
+        title: Text(
+          'Turmas',
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+            color: Theme.of(context).colorScheme.onSurface,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        centerTitle: true,
+      ),
+      body: Consumer<TurmasProvider>(
+        builder: (context, provider, child) {
+          if (provider.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+    
+          if (provider.turmas.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.school_outlined,
+                    size: 80,
+                    color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Nenhuma turma cadastrada',
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Toque no botão + para adicionar sua primeira turma',
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            );
+          }
+    
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: provider.turmas.length,
+            itemBuilder: (context, index) {
+              final turma = provider.turmas[index];
+              return _buildTurmaCard(context, turma, provider);
+            },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showAddTurmaDialog(context),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        icon: Icon(
+          Icons.add,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+        label: Text(
+          'Nova Turma',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
@@ -186,7 +111,7 @@ class _TurmasPageState extends State<TurmasPage> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             spreadRadius: 0,
             blurRadius: 10,
             offset: const Offset(0, 4),
@@ -209,7 +134,7 @@ class _TurmasPageState extends State<TurmasPage> {
                       width: 50,
                       height: 50,
                       decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Icon(
@@ -355,12 +280,13 @@ class _TurmasPageState extends State<TurmasPage> {
     );
   }
 
-  void _showAddTurmaDialog(BuildContext context) {
-    final controller = TextEditingController();
-    
-    showDialog(
-      context: context,
-      builder: (dialogContext) => AlertDialog(
+void _showAddTurmaDialog(BuildContext context) {
+  final controller = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: const Text('Nova Turma'),
         content: TextField(
@@ -378,19 +304,23 @@ class _TurmasPageState extends State<TurmasPage> {
             child: const Text('Cancelar'),
           ),
           ElevatedButton(
-            onPressed: () {
-              if (controller.text.trim().isNotEmpty) {
-                Provider.of<TurmasProvider>(dialogContext, listen: false)
-                    .addTurma(controller.text.trim());
+            onPressed: () async {
+              final nome = controller.text.trim();
+              if (nome.isNotEmpty) {
+                /// Use o context da página, **não** do diálogo!
+                final provider = Provider.of<TurmasProvider>(context, listen: false);
+                await provider.addTurma(nome);
+                // ignore: use_build_context_synchronously
                 Navigator.pop(dialogContext);
               }
             },
             child: const Text('Criar'),
           ),
         ],
-      ),
-    );
-  }
+      );
+    },
+  );
+}
 
   void _showDeleteConfirmation(BuildContext context, Turma turma, TurmasProvider provider) {
     showDialog(

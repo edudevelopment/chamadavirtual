@@ -13,7 +13,7 @@ class ChamadasRecentesPage extends StatefulWidget {
 class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with TickerProviderStateMixin {
   List<Chamada> _chamadas = [];
   bool _isLoading = true;
-  Set<String> _expandedItems = {};
+  final Set<String> _expandedItems = {};
   late AnimationController _animationController;
 
   @override
@@ -111,20 +111,20 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
           Icon(
             Icons.history_outlined,
             size: 80,
-            color: Theme.of(context).colorScheme.onSurface.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.3),
           ),
           const SizedBox(height: 16),
           Text(
             'Nenhuma chamada realizada',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.6),
             ),
           ),
           const SizedBox(height: 8),
           Text(
             'As chamadas realizadas aparecerão aqui',
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
+              color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.5),
             ),
             textAlign: TextAlign.center,
           ),
@@ -169,7 +169,7 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             spreadRadius: 0,
             blurRadius: 10,
             offset: const Offset(0, 4),
@@ -209,7 +209,7 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
               width: 50,
               height: 50,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
@@ -272,10 +272,10 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: color.withValues(alpha: 0.3),
         ),
       ),
       child: Text(
@@ -295,7 +295,7 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
         Container(
           width: double.infinity,
           height: 1,
-          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+          color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
         ),
         const SizedBox(height: 20),
         if (chamada.alunosPresentes.isNotEmpty) ...[
@@ -354,10 +354,10 @@ class _ChamadasRecentesPageState extends State<ChamadasRecentesPage> with Ticker
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: color.withOpacity(0.3),
+          color: color.withValues(alpha: 0.3),
         ),
       ),
       child: Row(

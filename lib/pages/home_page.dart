@@ -1,4 +1,6 @@
+import 'package:chamadavirtual/providers/turmas_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '/pages/turmas_page.dart';
 import '/pages/chamadas_recentes_page.dart';
 
@@ -27,7 +29,7 @@ class HomePage extends StatelessWidget {
               Text(
                 'Gerencie suas turmas e chamadas de forma simples',
                 style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                  color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7),
                 ),
               ),
               const SizedBox(height: 60),
@@ -45,7 +47,12 @@ class HomePage extends StatelessWidget {
                       ],
                       onTap: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const TurmasPage()),
+                        MaterialPageRoute(
+                          builder: (_) => ChangeNotifierProvider(
+                            create: (_) => TurmasProvider()..loadTurmas(),
+                            child: TurmasPage(),
+                          )
+                        ),
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -96,7 +103,7 @@ class HomePage extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: gradientColors[0].withOpacity(0.3),
+              color: gradientColors[0].withValues(alpha: 0.3),
               spreadRadius: 0,
               blurRadius: 20,
               offset: const Offset(0, 8),
@@ -116,7 +123,7 @@ class HomePage extends StatelessWidget {
                     width: 60,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Icon(
@@ -142,7 +149,7 @@ class HomePage extends StatelessWidget {
                         Text(
                           subtitle,
                           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.black.withOpacity(0.9),
+                            color: Colors.black.withValues(alpha: 0.9),
                           ),
                         ),
                       ],
@@ -150,7 +157,7 @@ class HomePage extends StatelessWidget {
                   ),
                   Icon(
                     Icons.arrow_forward_ios,
-                    color: Colors.black.withOpacity(0.8),
+                    color: Colors.black.withValues(alpha: 0.8),
                     size: 20,
                   ),
                 ],

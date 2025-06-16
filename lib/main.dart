@@ -1,4 +1,4 @@
-import 'package:chamadavirtual/pages/turmas_page.dart';
+import 'package:chamadavirtual/providers/turmas_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'themes/theme.dart';

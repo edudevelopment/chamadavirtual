@@ -152,7 +152,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.3),
             spreadRadius: 0,
             blurRadius: 15,
             offset: const Offset(0, 5),
@@ -185,14 +185,14 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
             children: [
               Icon(
                 Icons.access_time,
-                color: Colors.black.withOpacity(0.9),
+                color: Colors.black.withValues(alpha: 0.9),
                 size: 18,
               ),
               const SizedBox(width: 8),
               Text(
                 DateFormat('dd/MM/yyyy - HH:mm').format(DateTime.now()),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Colors.black.withOpacity(0.9),
+                  color: Colors.black.withValues(alpha: 0.9),
                 ),
               ),
             ],
@@ -245,7 +245,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             spreadRadius: 0,
             blurRadius: 10,
             offset: const Offset(0, -2),
@@ -286,7 +286,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             spreadRadius: 0,
             blurRadius: 10,
             offset: const Offset(0, -2),
@@ -332,7 +332,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
                     border: Border.all(
                       color: aluno.presente
                         ? Theme.of(context).colorScheme.secondary
-                        : Theme.of(context).colorScheme.outline.withOpacity(0.2),
+                        : Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
                       width: aluno.presente ? 2 : 1,
                     ),
                   ),
@@ -342,7 +342,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
                         radius: 20,
                         backgroundColor: aluno.presente
                           ? Theme.of(context).colorScheme.secondary
-                          : Theme.of(context).colorScheme.outline.withOpacity(0.2),
+                          : Theme.of(context).colorScheme.outline.withValues(alpha: 0.2),
                         child: Icon(
                           Icons.person,
                           color: Colors.black,
@@ -387,7 +387,7 @@ class _FazerChamadaPageState extends State<FazerChamadaPage> with TickerProvider
         color: Colors.transparent,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             spreadRadius: 0,
             blurRadius: 10,
             offset: const Offset(0, -2),
